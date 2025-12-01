@@ -1,16 +1,12 @@
 import collections
 import csv
-import matplotlib.pyplot as plt
-import re
-import seaborn as sns
 import sqlite3
+import matplotlib.pyplot as plt
+import seaborn as sns
+import re
 from concurrent.futures import ThreadPoolExecutor
 import nltk
 from nltk.tokenize import sent_tokenize
-
-# Download NLTK data
-nltk.download('punkt', quiet=True)
-nltk.download('punkt_tab', quiet=True)
 
 # BASE DIRECTORY
 BASE_DIR = r"D:\infosys_project"
@@ -112,23 +108,7 @@ print("\nTotal Word Counts:")
 for word, count in sorted_parallel_word_counts:
     print(f"{word.capitalize()}: {count}")
 
-# 10. Visualization
-n_words = 10
-plot_data = sorted_parallel_word_counts[:n_words]
-words = [item[0].capitalize() for item in plot_data]
-counts = [item[1] for item in plot_data]
-
-plt.figure(figsize=(12, 7))
-sns.barplot(x=words, y=counts)
-plt.title(f'Top {n_words} Most Frequent Words', fontsize=16)
-plt.xlabel('Word')
-plt.ylabel('Count')
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show()
-print("✅ Bar plot generated.")
-
-# 11. Create result DB
+# 10. Create result DB
 db_path_result = rf"{BASE_DIR}\result.db"
 conn_result = sqlite3.connect(db_path_result)
 c_result = conn_result.cursor()
@@ -146,6 +126,22 @@ c_result.executemany("INSERT INTO word_counts (word, count) VALUES (?, ?)", data
 conn_result.commit()
 conn_result.close()
 print(f"✅ Word counts stored inside: {db_path_result}")
+
+# 11. Visualization
+n_words = 10
+plot_data = sorted_parallel_word_counts[:n_words]
+words = [item[0].capitalize() for item in plot_data]
+counts = [item[1] for item in plot_data]
+
+plt.figure(figsize=(12, 7))
+sns.barplot(x=words, y=counts)
+plt.title(f'Top {n_words} Most Frequent Words', fontsize=16)
+plt.xlabel('Word')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+print("✅ Bar plot generated.")
 
 # 12. Sentence Tokenization
 all_sentences = []
@@ -179,6 +175,7 @@ RULES = [
 print("✅ Rules defined.")
 
 # 14. Categorize Sentences
+
 def extract_and_categorize_sentence(sentence, rules):
     for rule in rules:
         if re.search(rule['logic'], sentence, re.IGNORECASE):
@@ -186,13 +183,21 @@ def extract_and_categorize_sentence(sentence, rules):
     return None
 
 categorized_sentences = collections.defaultdict(list)
-for sentence in all_sentences:
-    result = extract_and_categorize_sentence(sentence, RULES)
+
+# --- Parallel execution without lambda ---
+def process_sentence(sentence):
+    return extract_and_categorize_sentence(sentence, RULES)
+
+with ThreadPoolExecutor(max_workers=8) as executor:
+    results = executor.map(process_sentence, all_sentences)
+
+# Aggregate results
+for result in results:
     if result:
         rule_name, matched_sentence = result
         categorized_sentences[rule_name].append(matched_sentence)
 
-print("\n✅ Categorization Results:")
+print("\n✅ Categorization Results (Parallel, No Lambda):")
 for rule_name, sentences in categorized_sentences.items():
     print(f"{rule_name}: {len(sentences)}")
 

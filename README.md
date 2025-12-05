@@ -1,10 +1,13 @@
-#  PARALLEL TEST PROCESSING 
+#  Parallel Text Handling Processor 
 
-A project that utilizes a **5-module NLP pipeline** to read, process, analyze, and score the Bhagavad Gita text. It applies thematic rule-based analysis, performs parallel word frequency counting, and generates visual insights through charts.
+## **💡 Project Overview**
+This project, Parallel Text Handling Processor (developed by Vishal Raman V ), is an efficient solution for analyzing large spiritual texts, specifically the Bhagavad Gita. It utilizes Regular Expressions (Regex) and Parallel Processing to automatically identify, count, and categorize recurring spiritual concepts, providing a structured and data-driven understanding of the scripture.
 
+## **❓ Problem Statement**
+Analyzing large, complex texts is challenging because key concepts and important ideas are often scattered throughout the content, making manual identification slow and inaccurate. For a text as dense as the Bhagavad Gita, locating every instance of core terms like karma, dharma, yoga, and soul throughout the entire book is extremely difficult to do by hand
 ## 🚀 How the Solution Works
 
-The system processes the raw text file through a structured, multi-step NLP pipeline. All necessary output files, including databases, CSV reports, and plots, are generated automatically upon execution.
+The system processes the raw text file through a structured, multi-step NLP pipeline. All necessary output files, including databases, CSV reports, and plots, are generated automatically upon successful execution.
 
 ### **The 5-Module NLP Pipeline**
 
@@ -101,7 +104,7 @@ Upon successful execution, the program will automatically generate the following
 
 ---
 
-## 🧾 Sample Output (Terminal)
+## 🧾 Sample Output and Visualizations
 
 The terminal output provides a quick summary of the processing steps and results:
 
@@ -157,8 +160,9 @@ Karma: 4
 Dharma: 0
 
 Rebirth: 0
-
-
+<p align="center">
+    <img src="visualization/Bar-chart.png" alt="Bar chart showing the frequency of the top 10 most frequent spiritual words in the Bhagavad Gita" width="500"/>
+</p>
 Categorizing sentences...
 
 ✓ 88 karma sentences
@@ -168,4 +172,6 @@ Categorizing sentences...
 ✓ 15 yoga sentences
 
 ✓ 8 dharma sentences
-
+<p align="center">
+    <img src="visualization/Pie-chart.png" alt="Pie chart showing sentence distribution by theme: Karma, Soul, Yoga, and Dharma" width="500"/>
+</p>

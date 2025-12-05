@@ -74,7 +74,7 @@ import nltk
 nltk.download('punkt')
 ```
 
-**3️⃣ Place the Required Files**
+### **3️⃣ Place the Required Files**
 
 Navigate to your desired project directory (e.g., D:\infosys_project\) and place the following files there:
 
@@ -83,7 +83,7 @@ Navigate to your desired project directory (e.g., D:\infosys_project\) and place
 
 
 
-**4️⃣ Run the Program**
+### **4️⃣ Run the Program**
 Open your Command Prompt (CMD) or PowerShell, change the directory, and run the main script:
 ```bash
 cd D:\infosys_project

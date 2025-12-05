@@ -149,7 +149,7 @@ for chunk_content in retrieved_chunks:
     all_sentences.extend(sent_tokenize(chunk_content))
 print(f"\n✅ Total sentences: {len(all_sentences)}")
 
-# 13. Rules
+# 13. Thematic Rules
 RULES = [
     {
         "rule_name": "karma_detector",
@@ -211,4 +211,3 @@ plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 plt.title("Sentence Distribution by Theme")
 plt.show()
 print("✅ Pie chart generated.")
-
